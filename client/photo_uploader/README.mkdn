@@ -1,0 +1,62 @@
+photo_uploader.pl
+===================================
+
+what
+----
+ディレクトリを監視して画像が来たらyanchaに投稿
+
+
+HOW TO USE
+----
+
+1. yancha_photo_uploader.pl をカスタマイズしてください
+
+    use lib qw(./lib ../../lib);
+    use Yancha::Client::PhotoUploader;
+     
+    my $uploader = Yancha::Client::PhotoUploader->new(
+        pyazo_url    => 'http://yairc.cfe.jp',                 # 画像を投稿するpyazoのurl
+        yancha_url   => 'http://yancha.hachiojipm.org:443',    # 投稿先のyanchaのurl
+        api_endpoint => '/api/post',                           # yanchaのAPIエンドポイント
+        upload_path  => '/tmp/upload_dir_path',                # 画像アップロード先
+        interval     => 3,                                     # 上記ディレクトリの監視間隔
+        nick         => 'PhotoUploader',                       # yancha投稿時のニックネーム
+        tag          => '#PUBLIC',                             # yancha投稿時のタグ
+    );
+   
+    $uploader->run;
+
+
+2. yanchaのfilter.js修正が場合によっては必要です
+
+pyazoのurlをimgタグにしているところ
+
+    diff --git a/public/js/filter.js b/public/js/filter.js
+    index b21957c..df7d613 100644
+    --- a/public/js/filter.js
+    +++ b/public/js/filter.js
+    @@ -1,8 +1,8 @@
+     function user_message_filter(message){
+     
+         //auto inline display(pyazo)
+    -    message = message.replace(/http(s)?:\/\/yairc.cfe.jp:5000(\/[\x21-\x7e]+)/gi,
+    -                              "<a href='//yairc.cfe.jp:5000$2' target='_blank'><img src='//yairc
+    +    message = message.replace(/http(s)?:\/\/yairc.cfe.jp(\/[\x21-\x7e]+)/gi,
+    +                              "<a href='//yairc.cfe.jp$2' target='_blank'><img src='//yairc.cf
+     
+         // YT thumbnail
+         message = message.replace(/http(s)?:\/\/www.youtube.com\/[\x21-\x7e]*v=([a-zA-Z0-9\-]+)/g,
+
+
+3. 起動
+
+ perl photo_uploader.pl 
+
+
+TODO
+----
+
+* 名前が適当
+* pyazoのレスポンスが画像かどうかの判断（現状はHTTPステータスだけ）
+* テスト
+

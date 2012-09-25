@@ -1,15 +1,17 @@
 photo_uploader.pl
 ===================================
 
-what
+WHAT?
 ----
-ディレクトリを監視して画像が来たらyanchaに投稿
+ディレクトリを監視して画像ファイルを検知したらyanchaに投稿
 
 
 HOW TO USE
 ----
 
 1. yancha_photo_uploader.pl をカスタマイズしてください
+
+以下を参考に修正
 
     use lib qw(./lib ../../lib);
     use Yancha::Client::PhotoUploader;
@@ -50,7 +52,8 @@ pyazoのurlをimgタグにしているところ
 
 3. 起動
 
- perl photo_uploader.pl 
+
+    perl photo_uploader.pl 
 
 
 TODO

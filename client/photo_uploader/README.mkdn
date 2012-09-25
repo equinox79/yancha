@@ -9,7 +9,7 @@ WHAT?
 HOW TO USE
 ----
 
-1. yancha_photo_uploader.pl をカスタマイズしてください
+1. photo_uploader.pl をカスタマイズしてください
 
 以下を参考に修正
 
